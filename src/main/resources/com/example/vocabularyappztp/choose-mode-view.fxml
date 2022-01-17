@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vocabularyappztp.controllers.ChooseModeController">
+   <children>
+      <Button onAction="#onLearnButtonClick" layoutX="150.0" layoutY="200.0" prefHeight="63.0" prefWidth="119.0" text="Learn" />
+      <Button onAction="#onTestButtonClick" layoutX="380.0" layoutY="200.0" prefHeight="63.0" prefWidth="119.0" text="Test" />
+      <Label layoutX="280.0" layoutY="100.0" text="Select mode" />
+   </children>
+</AnchorPane>

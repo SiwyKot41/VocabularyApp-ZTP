@@ -1,5 +1,6 @@
 package com.example.vocabularyappztp;
 
+import com.example.vocabularyappztp.controllers.MenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,16 +8,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
-    private MenuController menuController;
+public class VocabularyApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("menu-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 655.0, 436);
 
-        menuController = fxmlLoader.<MenuController>getController();
-        menuController.initialize();
+        MenuController menuController = fxmlLoader.<MenuController>getController();
+        menuController.initialize(stage);
 
         stage.setTitle("Hello!");
         stage.setScene(scene);
