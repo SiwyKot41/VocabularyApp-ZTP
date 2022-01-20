@@ -29,9 +29,14 @@ public class QuizController {
         this.mode = mode;
 //        mode.setTitle(label);
 
-        quiz = new Quiz();
         words = Utils.readWords();
         questions = createQuestions();
+        quiz = new Quiz(questions);
+
+        for (Question question : questions) {
+            question.getEnglishWord();
+            question.getPolishWord();
+        }
 
     }
 
@@ -47,6 +52,6 @@ public class QuizController {
             questions.add(answersBuilder.build());
         }
 
-        return null;
+        return questions;
     }
 }
