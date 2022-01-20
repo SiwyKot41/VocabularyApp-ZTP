@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 public class QuestionSingleChoiceAnswer extends Question {
-    public Word correctWord;
     public Set<Word> allWordsToChoice = new HashSet<>();
 
     public QuestionSingleChoiceAnswer(Word correctWord, Set<Word> allWordsToChoice) {
-        this.correctWord = correctWord;
+        super(correctWord);
         this.allWordsToChoice = allWordsToChoice;
     }
 

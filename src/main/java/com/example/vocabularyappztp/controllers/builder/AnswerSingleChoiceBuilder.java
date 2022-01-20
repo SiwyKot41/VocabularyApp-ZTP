@@ -22,6 +22,7 @@ public class AnswerSingleChoiceBuilder implements AnswersBuilder {
             while (index == i) {
                 index = (int) (Math.random() * (words.size()));
             }
+
             allWordsToChoice.add(words.get(index));
 //            allWordsToChoice.add(words.get(index));
         }

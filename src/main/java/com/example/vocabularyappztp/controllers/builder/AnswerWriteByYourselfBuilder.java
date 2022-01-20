@@ -26,7 +26,6 @@ public class AnswerWriteByYourselfBuilder implements AnswersBuilder {
 
     @Override
     public Question build() {
-
         return new QuestionWriteByYourself(correctWord);
     }
 }

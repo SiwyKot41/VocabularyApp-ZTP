@@ -24,7 +24,6 @@ public class AnswerBlankSpacesBuilder implements AnswersBuilder {
 
     @Override
     public Question build() {
-
         return null;
     }
 }

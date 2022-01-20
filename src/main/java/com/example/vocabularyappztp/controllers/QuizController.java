@@ -1,6 +1,7 @@
 package com.example.vocabularyappztp.controllers;
 
 import com.example.vocabularyappztp.Mode;
+import com.example.vocabularyappztp.model.singleton.Progress;
 import com.example.vocabularyappztp.controllers.builder.AnswerSingleChoiceBuilder;
 import com.example.vocabularyappztp.controllers.builder.AnswerWriteByYourselfBuilder;
 import com.example.vocabularyappztp.controllers.builder.AnswersBuilder;
@@ -12,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class QuizController {
 
@@ -20,6 +22,8 @@ public class QuizController {
     private Mode mode;
     private ArrayList<Word> words = new ArrayList<Word>();
     private ArrayList<Question> questions = new ArrayList<Question>();
+    private Iterator<Question> questionIterator;
+    private Question selectedQuestion;
 
     @FXML
     private Label label;
@@ -33,11 +37,14 @@ public class QuizController {
         questions = createQuestions();
         quiz = new Quiz(questions);
 
-        for (Question question : questions) {
-            question.getEnglishWord();
-            question.getPolishWord();
+        if (!Progress.isExisting()) {
+            for (Word word : words) {
+                Progress.getInstance().putKnownWord(word, 0);
+            }
         }
 
+        questionIterator = questions.iterator();
+        chooseQuestion();
     }
 
     public ArrayList<Question> createQuestions() {
@@ -53,5 +60,23 @@ public class QuizController {
         }
 
         return questions;
+    }
+
+    public void chooseQuestion() {
+        int theLeastLevelOfKnowingWord = 0;
+
+        if (questionIterator.hasNext()) {
+            Question currentQuestion = questionIterator.next();
+            theLeastLevelOfKnowingWord = Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord());
+            selectedQuestion = currentQuestion;
+        }
+
+        while (questionIterator.hasNext()) {
+            Question currentQuestion = questionIterator.next();
+            if (theLeastLevelOfKnowingWord > Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord())) {
+                theLeastLevelOfKnowingWord = Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord());
+                selectedQuestion = currentQuestion;
+            }
+        }
     }
 }
