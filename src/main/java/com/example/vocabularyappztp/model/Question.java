@@ -4,6 +4,7 @@ public abstract class Question {
     private Word correctWord;
     public Question(Word correctWord) {
         this.correctWord = correctWord;
+
     }
 
     public abstract void getPolishWord();
@@ -11,4 +12,5 @@ public abstract class Question {
     public Word getCorrectWord() {
         return correctWord;
     }
+
 }

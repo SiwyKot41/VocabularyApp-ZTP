@@ -27,4 +27,8 @@ public class QuestionSingleChoiceAnswer extends Question {
         }
 
     }
+
+    public Set<Word> getAllWordsToChoice() {
+        return allWordsToChoice;
+    }
 }
