@@ -52,7 +52,6 @@ public class QuizController {
         }
 
         questionIterator = questions.iterator();
-        chooseQuestion();
         prepareQuestion();
     }
 
@@ -71,25 +70,10 @@ public class QuizController {
         return questions;
     }
 
-    public void chooseQuestion() {
-        int theLeastLevelOfKnowingWord = 0;
-
-        if (questionIterator.hasNext()) {
-            Question currentQuestion = questionIterator.next();
-            theLeastLevelOfKnowingWord = Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord());
-            selectedQuestion = currentQuestion;
-        }
-
-        while (questionIterator.hasNext()) {
-            Question currentQuestion = questionIterator.next();
-            if (theLeastLevelOfKnowingWord > Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord())) {
-                theLeastLevelOfKnowingWord = Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord());
-                selectedQuestion = currentQuestion;
-            }
-        }
-    }
-
     public void prepareQuestion() {
+        questionIterator = questions.iterator();
+        selectedQuestion = mode.chooseQuestion(questionIterator);
+
         if (selectedQuestion instanceof QuestionSingleChoiceAnswer) {
             prepareSingleChoiceQuestion();
         } else if (selectedQuestion instanceof QuestionWriteByYourself) {
@@ -129,33 +113,25 @@ public class QuizController {
     }
 
     public void onClickAnswerA(ActionEvent actionEvent) {
-        questionIterator = questions.iterator();
         updateProgress(buttonA);
-        chooseQuestion();
         prepareQuestion();
         System.out.println("jestem tutaj przycisk a");
     }
 
     public void onClickAnswerB(ActionEvent actionEvent) {
-        questionIterator = questions.iterator();
         updateProgress(buttonB);
-        chooseQuestion();
         prepareQuestion();
         System.out.println("jestem tutaj przycisk b");
     }
 
     public void onClickAnswerC(ActionEvent actionEvent) {
-        questionIterator = questions.iterator();
         updateProgress(buttonC);
-        chooseQuestion();
         prepareQuestion();
         System.out.println("jestem tutaj przycisk c");
     }
 
     public void onClickAnswerD(ActionEvent actionEvent) {
-        questionIterator = questions.iterator();
         updateProgress(buttonD);
-        chooseQuestion();
         prepareQuestion();
         System.out.println("jestem tutaj przycisk d");
     }
