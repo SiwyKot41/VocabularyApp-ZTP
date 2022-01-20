@@ -13,19 +13,17 @@ public class ChooseModeController {
     private Mode mode;
     private Stage stage;
 
-    public void onTestButtonClick(ActionEvent actionEvent) throws IOException {
+    public void onTestButtonClick(ActionEvent actionEvent) throws Exception {
         mode = new Mode(new TestStateMode());
         startGame();
     }
 
-    public void onLearnButtonClick(ActionEvent actionEvent) throws IOException {
+    public void onLearnButtonClick(ActionEvent actionEvent) throws Exception {
         mode = new Mode(new LearnStateMode());
         startGame();
     }
 
-    public void startGame() throws IOException {
-        //TODO: wczytywanie z pliku słówek
-        //TODO: tworzenie quizu?
+    public void startGame() throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("quiz-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 

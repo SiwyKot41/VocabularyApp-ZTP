@@ -16,4 +16,6 @@ module com.example.vocabularyappztp {
     opens com.example.vocabularyappztp.controllers to javafx.fxml;
     exports com.example.vocabularyappztp.model;
     opens com.example.vocabularyappztp.model to javafx.fxml;
+    exports com.example.vocabularyappztp.controllers.builder;
+    opens com.example.vocabularyappztp.controllers.builder to javafx.fxml;
 }

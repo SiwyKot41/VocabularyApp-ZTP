@@ -1,4 +1,5 @@
 package com.example.vocabularyappztp.model;
 
-public abstract class Question {
+public enum Level {
+    EASY, MEDIUM, HARD
 }

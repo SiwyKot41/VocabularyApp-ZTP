@@ -3,7 +3,20 @@ package com.example.vocabularyappztp.model;
 public class Word {
     private String englishWord;
     private String polishWord;
-    private String category;
+    private Level level;
+
+    public Word(String englishWord, String polishWord) throws Exception {
+        this.englishWord = englishWord;
+        this.polishWord = polishWord;
+        selectLevel();
+    }
+
+    private void selectLevel() throws Exception {
+        if (englishWord.length() <= 4 && englishWord.length() > 0) level = Level.EASY;
+        else if (englishWord.length() > 4 && englishWord.length() < 8) level = Level.MEDIUM;
+        else if (englishWord.length() >= 8) level = Level.HARD;
+        else throw new Exception("Incorrect word");
+    }
 
     public String getEnglishWord() {
         return englishWord;
@@ -21,11 +34,11 @@ public class Word {
         this.polishWord = polishWord;
     }
 
-    public String getCategory() {
-        return category;
+    public Level getLevel() {
+        return level;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setLevel(Level level) {
+        this.level = level;
     }
 }
