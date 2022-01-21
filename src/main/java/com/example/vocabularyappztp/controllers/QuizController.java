@@ -73,7 +73,7 @@ public class QuizController {
 
     public void prepareQuestion() {
         questionIterator = questions.iterator();
-        selectedQuestion = mode.chooseQuestion(questionIterator, questions.get(0));
+        selectedQuestion = mode.chooseQuestion(questionIterator);
 
         if (selectedQuestion instanceof QuestionSingleChoiceAnswer) {
             prepareSingleChoiceQuestion();

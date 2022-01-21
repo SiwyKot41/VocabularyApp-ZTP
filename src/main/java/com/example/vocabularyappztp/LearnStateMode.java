@@ -11,8 +11,9 @@ import java.util.List;
 
 public class LearnStateMode extends StateMode {
 
-    public Category typeOfQuestion = Category.SINGLE_CHOICE;
-    public List<Category> typesOfQuestion = new ArrayList<>(Arrays.asList(Category.SINGLE_CHOICE, Category.TRANSLATE_BY_YOURSELF));
+    private Category typeOfQuestion = Category.SINGLE_CHOICE;
+    private List<Category> typesOfQuestion = new ArrayList<>(Arrays.asList(Category.SINGLE_CHOICE, Category.TRANSLATE_BY_YOURSELF));
+    private LastWord lastWord = new LastWord();
 
     @Override
     public void setTitle(Label label) {
@@ -20,21 +21,30 @@ public class LearnStateMode extends StateMode {
     }
 
     @Override
-    public Question chooseQuestion(Iterator<Question> questionIterator, Question firstQuestion) {
-        int theLeastLevelOfKnowingWord = 999999;
+    public Question chooseQuestion(Iterator<Question> questionIterator) {
+        int theLeastLevelOfKnowingWord = 0;
         Question selectedQuestion = null;
+
+        if (questionIterator.hasNext()) {
+            Question currentQuestion = questionIterator.next();
+            theLeastLevelOfKnowingWord = Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord());
+            selectedQuestion = currentQuestion;
+        }
 
         while (questionIterator.hasNext()) {
             Question currentQuestion = questionIterator.next();
             if (theLeastLevelOfKnowingWord > Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord())) {
                 theLeastLevelOfKnowingWord = Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord());
 
+                if (lastWord.getLastWord().equals(currentQuestion.getCorrectWord())) typeOfQuestion = lastWord.getTypeOfQuestion();
                 if (typeOfQuestion == Category.SINGLE_CHOICE) selectedQuestion = currentQuestion;
                 else if (typeOfQuestion == Category.TRANSLATE_BY_YOURSELF) selectedQuestion = questionIterator.next();
             }
         }
 
         typeOfQuestion = typesOfQuestion.get((typesOfQuestion.indexOf(typeOfQuestion) + 1) % 2);
+        lastWord.setLastWord(selectedQuestion.getCorrectWord());
+        lastWord.setTypeOfQuestion(typeOfQuestion);
 
         return selectedQuestion;
     }

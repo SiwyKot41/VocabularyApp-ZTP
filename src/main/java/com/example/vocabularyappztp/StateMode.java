@@ -7,5 +7,5 @@ import java.util.Iterator;
 
 public abstract class StateMode {
     public abstract void setTitle(Label label);
-    public abstract Question chooseQuestion(Iterator<Question> questionIterator, Question firstQuestions);
+    public abstract Question chooseQuestion(Iterator<Question> questionIterator);
 }

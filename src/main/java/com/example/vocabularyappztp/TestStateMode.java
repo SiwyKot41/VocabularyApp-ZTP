@@ -13,7 +13,7 @@ public class TestStateMode extends StateMode {
     }
 
     @Override
-    public Question chooseQuestion(Iterator<Question> questionIterator, Question questions) {
+    public Question chooseQuestion(Iterator<Question> questionIterator) {
         return null;
     }
 }
