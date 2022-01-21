@@ -35,6 +35,7 @@ public class QuizController {
     private Iterator<Question> questionIterator;
     private Question selectedQuestion;
     private HashMap<Button, String> chosenAnswer = new HashMap<>();
+    public static boolean lastAnswerWasCorrect = true;
 
 
     @FXML
@@ -126,25 +127,21 @@ public class QuizController {
     public void onClickAnswerA(ActionEvent actionEvent) {
         updateProgress(buttonA);
         prepareQuestion();
-        System.out.println("jestem tutaj przycisk a");
     }
 
     public void onClickAnswerB(ActionEvent actionEvent) {
         updateProgress(buttonB);
         prepareQuestion();
-        System.out.println("jestem tutaj przycisk b");
     }
 
     public void onClickAnswerC(ActionEvent actionEvent) {
         updateProgress(buttonC);
         prepareQuestion();
-        System.out.println("jestem tutaj przycisk c");
     }
 
     public void onClickAnswerD(ActionEvent actionEvent) {
         updateProgress(buttonD);
         prepareQuestion();
-        System.out.println("jestem tutaj przycisk d");
     }
 
     public void onClickNext(ActionEvent actionEvent) {
@@ -156,8 +153,12 @@ public class QuizController {
     public void updateProgress(Button button) {
         if (chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord())) {
             Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(), Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) + 1);
+            QuizController.lastAnswerWasCorrect = true;
         } else if (!chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord()) && Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) > 0) {
             Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(), Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) - 1);
+            QuizController.lastAnswerWasCorrect = false;
+        } else {
+            QuizController.lastAnswerWasCorrect = false;
         }
     }
 }
