@@ -1,6 +1,6 @@
 package com.example.vocabularyappztp.model;
 
-public class LastWord {
+public class LastQuestion {
     private Word lastWord;
     private Category typeOfQuestion;
 

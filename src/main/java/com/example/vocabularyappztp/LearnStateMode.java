@@ -13,7 +13,7 @@ public class LearnStateMode extends StateMode {
 
     private Category typeOfQuestion = Category.SINGLE_CHOICE;
     private List<Category> typesOfQuestion = new ArrayList<>(Arrays.asList(Category.SINGLE_CHOICE, Category.TRANSLATE_BY_YOURSELF));
-    private LastWord lastWord = new LastWord();
+    private LastQuestion lastQuestion = new LastQuestion();
 
     @Override
     public void setTitle(Label label) {
@@ -36,15 +36,16 @@ public class LearnStateMode extends StateMode {
             if (theLeastLevelOfKnowingWord > Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord())) {
                 theLeastLevelOfKnowingWord = Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord());
 
-                if (lastWord.getLastWord().equals(currentQuestion.getCorrectWord())) typeOfQuestion = lastWord.getTypeOfQuestion();
+                if (lastQuestion.getLastWord().equals(currentQuestion.getCorrectWord())) typeOfQuestion = lastQuestion.getTypeOfQuestion();
                 if (typeOfQuestion == Category.SINGLE_CHOICE) selectedQuestion = currentQuestion;
                 else if (typeOfQuestion == Category.TRANSLATE_BY_YOURSELF) selectedQuestion = questionIterator.next();
             }
         }
 
         typeOfQuestion = typesOfQuestion.get((typesOfQuestion.indexOf(typeOfQuestion) + 1) % 2);
-        lastWord.setLastWord(selectedQuestion.getCorrectWord());
-        lastWord.setTypeOfQuestion(typeOfQuestion);
+        lastQuestion.setLastWord(selectedQuestion.getCorrectWord());
+        lastQuestion.setTypeOfQuestion(typeOfQuestion);
+        //TODO jednak powtarzanie pytania jak źle odpowiesz nie działa, jedyne co się powtarza to rodzaj słówka
 
         return selectedQuestion;
     }

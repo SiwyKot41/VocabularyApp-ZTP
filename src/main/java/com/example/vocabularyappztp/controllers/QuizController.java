@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -22,6 +23,8 @@ public class QuizController {
     public Button buttonB;
     public Button buttonC;
     public Button buttonD;
+    public TextField typedWord;
+    public Button buttonNext;
 
     private Quiz quiz;
     private Stage stage;
@@ -31,7 +34,7 @@ public class QuizController {
     private ArrayList<Question> questions = new ArrayList<Question>();
     private Iterator<Question> questionIterator;
     private Question selectedQuestion;
-    private HashMap<Button, Word> chosenAnswer = new HashMap<>();
+    private HashMap<Button, String> chosenAnswer = new HashMap<>();
 
 
     @FXML
@@ -89,28 +92,35 @@ public class QuizController {
 
         buttonA.setVisible(true);
         buttonA.setText(String.valueOf(allWordsToChoice.get(0).getPolishWord()));
-        chosenAnswer.put(buttonA, allWordsToChoice.get(0));
+        chosenAnswer.put(buttonA, allWordsToChoice.get(0).getPolishWord());
 
         buttonB.setVisible(true);
         buttonB.setText(String.valueOf(allWordsToChoice.get(1).getPolishWord()));
-        chosenAnswer.put(buttonB, allWordsToChoice.get(1));
+        chosenAnswer.put(buttonB, allWordsToChoice.get(1).getPolishWord());
 
         buttonC.setVisible(true);
         buttonC.setText(String.valueOf(allWordsToChoice.get(2).getPolishWord()));
-        chosenAnswer.put(buttonC, allWordsToChoice.get(2));
+        chosenAnswer.put(buttonC, allWordsToChoice.get(2).getPolishWord());
 
         buttonD.setVisible(true);
         buttonD.setText(String.valueOf(allWordsToChoice.get(3).getPolishWord()));
-        chosenAnswer.put(buttonD, allWordsToChoice.get(3));
+        chosenAnswer.put(buttonD, allWordsToChoice.get(3).getPolishWord());
+
+        typedWord.setVisible(false);
+        buttonNext.setVisible(false);
     }
 
     public void prepareWriteByYourselfQuestion() {
         questionText.setText("Wpisz tłumaczenie słowa " + selectedQuestion.getCorrectWord().getEnglishWord());
 
-//        buttonA.setVisible(false);
+        buttonA.setVisible(false);
         buttonB.setVisible(false);
         buttonC.setVisible(false);
         buttonD.setVisible(false);
+
+        typedWord.setText("");
+        typedWord.setVisible(true);
+        buttonNext.setVisible(true);
     }
 
     public void onClickAnswerA(ActionEvent actionEvent) {
@@ -137,10 +147,16 @@ public class QuizController {
         System.out.println("jestem tutaj przycisk d");
     }
 
+    public void onClickNext(ActionEvent actionEvent) {
+        chosenAnswer.put(buttonNext, typedWord.getText());
+        updateProgress(buttonNext);
+        prepareQuestion();
+    }
+
     public void updateProgress(Button button) {
-        if (chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord())) {
+        if (chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord())) {
             Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(), Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) + 1);
-        } else if (!chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord()) && Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) > 0) {
+        } else if (!chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord()) && Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) > 0) {
             Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(), Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) - 1);
         }
     }
