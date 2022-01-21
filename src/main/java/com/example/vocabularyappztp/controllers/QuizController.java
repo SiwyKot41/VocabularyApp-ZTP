@@ -33,6 +33,7 @@ public class QuizController {
     private Question selectedQuestion;
     private HashMap<Button, Word> chosenAnswer = new HashMap<>();
 
+
     @FXML
     private Label label;
 
@@ -72,7 +73,7 @@ public class QuizController {
 
     public void prepareQuestion() {
         questionIterator = questions.iterator();
-        selectedQuestion = mode.chooseQuestion(questionIterator);
+        selectedQuestion = mode.chooseQuestion(questionIterator, questions.get(0));
 
         if (selectedQuestion instanceof QuestionSingleChoiceAnswer) {
             prepareSingleChoiceQuestion();
@@ -106,7 +107,7 @@ public class QuizController {
     public void prepareWriteByYourselfQuestion() {
         questionText.setText("Wpisz tłumaczenie słowa " + selectedQuestion.getCorrectWord().getEnglishWord());
 
-        buttonA.setVisible(false);
+//        buttonA.setVisible(false);
         buttonB.setVisible(false);
         buttonC.setVisible(false);
         buttonD.setVisible(false);

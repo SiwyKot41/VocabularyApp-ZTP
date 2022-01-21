@@ -3,6 +3,7 @@ package com.example.vocabularyappztp;
 import com.example.vocabularyappztp.model.Question;
 import javafx.scene.control.Label;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Mode {
@@ -17,7 +18,7 @@ public class Mode {
     }
 
 
-    public Question chooseQuestion(Iterator<Question> questionIterator) {
-        return stateMode.chooseQuestion(questionIterator);
+    public Question chooseQuestion(Iterator<Question> questionIterator, Question firstQuestion) {
+        return stateMode.chooseQuestion(questionIterator, firstQuestion);
     }
 }
