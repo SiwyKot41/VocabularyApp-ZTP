@@ -1,6 +1,7 @@
 package com.example.vocabularyappztp.controllers;
 
 import com.example.vocabularyappztp.Mode;
+import com.example.vocabularyappztp.controllers.iterator.Container;
 import com.example.vocabularyappztp.model.*;
 import com.example.vocabularyappztp.model.singleton.Progress;
 import com.example.vocabularyappztp.controllers.builder.AnswerSingleChoiceBuilder;
@@ -30,9 +31,9 @@ public class QuizController {
     private Stage stage;
     private Mode mode;
 
-    private ArrayList<Word> words = new ArrayList<Word>();
-    private ArrayList<Question> questions = new ArrayList<Question>();
-    private Iterator<Question> questionIterator;
+    private ArrayList<Word> words = new ArrayList<>();
+    private ArrayList<Question> questions = new ArrayList<>();
+    private Container questionContainer;
     private Question selectedQuestion;
     private HashMap<Button, String> chosenAnswer = new HashMap<>();
     public static boolean lastAnswerWasCorrect = true;
@@ -56,7 +57,8 @@ public class QuizController {
             }
         }
 
-        questionIterator = questions.iterator();
+        questionContainer = new Container(questions);
+
         prepareQuestion();
     }
 
@@ -76,8 +78,7 @@ public class QuizController {
     }
 
     public void prepareQuestion() {
-        questionIterator = questions.iterator();
-        selectedQuestion = mode.chooseQuestion(questionIterator);
+        selectedQuestion = mode.chooseQuestion(questionContainer);
 
         if (selectedQuestion instanceof QuestionSingleChoiceAnswer) {
             prepareSingleChoiceQuestion();
