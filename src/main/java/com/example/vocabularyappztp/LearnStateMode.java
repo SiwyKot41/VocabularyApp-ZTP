@@ -15,7 +15,6 @@ public class LearnStateMode extends StateMode {
 
     private Category typeOfQuestion = Category.SINGLE_CHOICE;
     private List<Category> typesOfQuestion = new ArrayList<>(Arrays.asList(Category.SINGLE_CHOICE, Category.TRANSLATE_BY_YOURSELF));
-    private LastQuestion lastQuestion = new LastQuestion();
 
     @Override
     public void setTitle(Label label) {
@@ -36,17 +35,10 @@ public class LearnStateMode extends StateMode {
             if (theLeastLevelOfKnowingWord > Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord())) {
                 theLeastLevelOfKnowingWord = Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord());
 
-//                if (lastQuestion.getLastWord().equals(currentQuestion.getCorrectWord())) typeOfQuestion = lastQuestion.getTypeOfQuestion();
                 if (typeOfQuestion == Category.SINGLE_CHOICE) selectedQuestion = currentQuestion;
                 else if (typeOfQuestion == Category.TRANSLATE_BY_YOURSELF) selectedQuestion = iterator.next();
             }selectedQuestion = iterator.next();
         }
-
-//        lastQuestion.setLastWord(selectedQuestion.getCorrectWord());
-//        lastQuestion.setTypeOfQuestion(typeOfQuestion);
-        System.out.println(typeOfQuestion);
-        System.out.println(QuizController.lastAnswerWasCorrect);
-        System.out.println(((typesOfQuestion.indexOf(typeOfQuestion) + 1) % 2));
 
         return selectedQuestion;
     }
