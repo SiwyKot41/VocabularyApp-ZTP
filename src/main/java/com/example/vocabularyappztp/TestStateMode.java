@@ -1,11 +1,9 @@
 package com.example.vocabularyappztp;
 
-import com.example.vocabularyappztp.controllers.QuizController;
 import com.example.vocabularyappztp.controllers.iterator.Container;
 import com.example.vocabularyappztp.controllers.iterator.Iterator;
 import com.example.vocabularyappztp.model.Category;
 import com.example.vocabularyappztp.model.Question;
-import com.example.vocabularyappztp.model.singleton.Progress;
 import javafx.scene.control.Label;
 
 import java.util.ArrayList;

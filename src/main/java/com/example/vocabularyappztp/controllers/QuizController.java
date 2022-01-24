@@ -24,6 +24,8 @@ public class QuizController {
     public Button buttonB;
     public Button buttonC;
     public Button buttonD;
+    public Button choiceBonusButton;
+    public Button writeBonusButton;
     public TextField typedWord;
     public Button buttonNext;
 
@@ -107,6 +109,11 @@ public class QuizController {
         buttonD.setText(String.valueOf(allWordsToChoice.get(3).getPolishWord()));
         chosenAnswer.put(buttonD, allWordsToChoice.get(3).getPolishWord());
 
+        choiceBonusButton.setVisible(true);
+        choiceBonusButton.setText("Bonus");
+        chosenAnswer.put(choiceBonusButton, "Bonus");
+
+        writeBonusButton.setVisible(false);
         typedWord.setVisible(false);
         buttonNext.setVisible(false);
     }
@@ -118,6 +125,11 @@ public class QuizController {
         buttonB.setVisible(false);
         buttonC.setVisible(false);
         buttonD.setVisible(false);
+        choiceBonusButton.setVisible(false);
+
+        writeBonusButton.setVisible(true);
+        writeBonusButton.setText("Bonus");
+        chosenAnswer.put(writeBonusButton, "Bonus");
 
         typedWord.setText("");
         typedWord.setVisible(true);
@@ -149,6 +161,15 @@ public class QuizController {
         updateProgress(buttonNext);
         prepareQuestion();
     }
+
+    public void onClickWriteBonus(ActionEvent actionEvent) {
+
+    }
+
+    public void onClickChoiceBonus(ActionEvent actionEvent) {
+
+    }
+
 
     public void updateProgress(Button button) {
         if (chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord())) {

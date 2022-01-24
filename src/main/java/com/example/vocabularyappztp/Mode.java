@@ -4,9 +4,6 @@ import com.example.vocabularyappztp.controllers.iterator.Container;
 import com.example.vocabularyappztp.model.Question;
 import javafx.scene.control.Label;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 public class Mode {
     private StateMode stateMode;
 

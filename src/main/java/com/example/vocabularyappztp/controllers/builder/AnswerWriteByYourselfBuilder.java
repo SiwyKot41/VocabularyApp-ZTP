@@ -1,6 +1,5 @@
 package com.example.vocabularyappztp.controllers.builder;
 
-import com.example.vocabularyappztp.model.Category;
 import com.example.vocabularyappztp.model.Question;
 import com.example.vocabularyappztp.model.QuestionWriteByYourself;
 import com.example.vocabularyappztp.model.Word;
