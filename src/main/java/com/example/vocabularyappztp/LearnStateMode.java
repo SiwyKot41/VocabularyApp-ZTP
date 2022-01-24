@@ -1,13 +1,14 @@
 package com.example.vocabularyappztp;
 
 import com.example.vocabularyappztp.controllers.QuizController;
+import com.example.vocabularyappztp.controllers.iterator.Container;
+import com.example.vocabularyappztp.controllers.iterator.Iterator;
 import com.example.vocabularyappztp.model.*;
 import com.example.vocabularyappztp.model.singleton.Progress;
 import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class LearnStateMode extends StateMode {
@@ -21,19 +22,21 @@ public class LearnStateMode extends StateMode {
     }
 
     @Override
-    public Question chooseQuestion(Iterator<Question> questionIterator) {
+    public Question chooseQuestion(Container container) {
         int theLeastLevelOfKnowingWord = 99999;
         Question selectedQuestion = null;
 
+        Iterator iterator = container.randomIterator();
+
         if (QuizController.lastAnswerWasCorrect) typeOfQuestion = typesOfQuestion.get((typesOfQuestion.indexOf(typeOfQuestion) + 1) % 2);
 
-        while (questionIterator.hasNext()) {
-            Question currentQuestion = questionIterator.next();
+        while (iterator.hasNext()) {
+            Question currentQuestion = iterator.next();
             if (theLeastLevelOfKnowingWord > Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord())) {
                 theLeastLevelOfKnowingWord = Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord());
 
                 if (typeOfQuestion == Category.SINGLE_CHOICE) selectedQuestion = currentQuestion;
-                else if (typeOfQuestion == Category.TRANSLATE_BY_YOURSELF) selectedQuestion = questionIterator.next();
+                else if (typeOfQuestion == Category.TRANSLATE_BY_YOURSELF) selectedQuestion = iterator.next();
             }
         }
 
