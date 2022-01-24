@@ -29,6 +29,7 @@ public class QuizController {
 
     @FXML
     public Label questionText;
+    public Label pointsText;
     public Button buttonA;
     public Button buttonB;
     public Button buttonC;
@@ -107,6 +108,7 @@ public class QuizController {
         pointObject = new SingleChoicePointDecorator(pointObject);
 
         questionText.setText("Wybierz prawidłowe tłumaczenie dla " + selectedQuestion.getCorrectWord().getEnglishWord());
+        pointsText.setText("Points: " + points);
         Set<Word> wordsToChoice = ((QuestionSingleChoiceAnswer) selectedQuestion).getAllWordsToChoice();
         List<Word> allWordsToChoice = new ArrayList<>(wordsToChoice);
 
@@ -139,6 +141,7 @@ public class QuizController {
 
         pointObject = new WritePointDecorator(pointObject);
         questionText.setText("Wpisz tłumaczenie słowa " + selectedQuestion.getCorrectWord().getEnglishWord());
+        pointsText.setText("Points: " + points);
 
         buttonA.setVisible(false);
         buttonB.setVisible(false);
