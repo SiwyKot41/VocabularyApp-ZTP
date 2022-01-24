@@ -1,6 +1,7 @@
 package com.example.vocabularyappztp.controllers;
 
 import com.example.vocabularyappztp.Mode;
+import com.example.vocabularyappztp.VocabularyApplication;
 import com.example.vocabularyappztp.controllers.iterator.Container;
 
 import com.example.vocabularyappztp.model.Question;
@@ -18,11 +19,14 @@ import com.example.vocabularyappztp.controllers.builder.AnswerWriteByYourselfBui
 import com.example.vocabularyappztp.controllers.builder.AnswersBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.*;
 
 public class QuizController {
@@ -30,17 +34,24 @@ public class QuizController {
     @FXML
     public Label questionText;
     public Label pointsText;
+    public Label writeBonusText;
     public Button buttonA;
     public Button buttonB;
     public Button buttonC;
     public Button buttonD;
     public Button choiceBonusButton;
     public Button writeBonusButton;
+    public Button backButton;
     public TextField typedWord;
     public Button buttonNext;
 
-    public int points = 0;
+
+    public int points = 10;
     Points pointObject;
+
+    public int choiceBonusPrice = 6;
+    public int writeBonusPrice = 3;
+    public String writeBonusLetters = "";
 
     private Quiz quiz;
     private Stage stage;
@@ -95,6 +106,8 @@ public class QuizController {
         pointObject = new PointsImpl();
 
         selectedQuestion = mode.chooseQuestion(container);
+        writeBonusText.setText(writeBonusLetters);
+        writeBonusText.setDisable(true);
 
         if (selectedQuestion instanceof QuestionSingleChoiceAnswer) {
             prepareSingleChoiceQuestion();
@@ -105,10 +118,22 @@ public class QuizController {
 
     public void prepareSingleChoiceQuestion() {
 
-        pointObject = new SingleChoicePointDecorator(pointObject);
+        choiceBonusButton.setVisible(false);
+        choiceBonusButton.setText("Bonus");
+
+        if(label.getText() == "Learn") {
+            pointObject = new SingleChoicePointDecorator(pointObject);
+            pointsText.setText("Points: " + points);
+
+            choiceBonusButton.setVisible(true);
+            choiceBonusButton.setDisable(true);
+
+            if (points >= choiceBonusPrice){
+                choiceBonusButton.setDisable(false);
+            }
+        }
 
         questionText.setText("Wybierz prawidłowe tłumaczenie dla " + selectedQuestion.getCorrectWord().getEnglishWord());
-        pointsText.setText("Points: " + points);
         Set<Word> wordsToChoice = ((QuestionSingleChoiceAnswer) selectedQuestion).getAllWordsToChoice();
         List<Word> allWordsToChoice = new ArrayList<>(wordsToChoice);
 
@@ -128,10 +153,6 @@ public class QuizController {
         buttonD.setText(String.valueOf(allWordsToChoice.get(3).getPolishWord()));
         chosenAnswer.put(buttonD, allWordsToChoice.get(3).getPolishWord());
 
-        choiceBonusButton.setVisible(true);
-        choiceBonusButton.setText("Bonus");
-        chosenAnswer.put(choiceBonusButton, "Bonus");
-
         writeBonusButton.setVisible(false);
         typedWord.setVisible(false);
         buttonNext.setVisible(false);
@@ -139,19 +160,28 @@ public class QuizController {
 
     public void prepareWriteByYourselfQuestion() {
 
-        pointObject = new WritePointDecorator(pointObject);
+        writeBonusButton.setVisible(false);
+        writeBonusButton.setText("Bonus");
+
+        if(label.getText() == "Learn") {
+            pointObject = new WritePointDecorator(pointObject);
+            pointsText.setText("Points: " + points);
+
+            writeBonusButton.setVisible(true);
+            writeBonusButton.setDisable(true);
+
+            if(points >= writeBonusPrice){
+                writeBonusButton.setDisable(false);
+            }
+        }
+
         questionText.setText("Wpisz tłumaczenie słowa " + selectedQuestion.getCorrectWord().getEnglishWord());
-        pointsText.setText("Points: " + points);
 
         buttonA.setVisible(false);
         buttonB.setVisible(false);
         buttonC.setVisible(false);
         buttonD.setVisible(false);
         choiceBonusButton.setVisible(false);
-
-        writeBonusButton.setVisible(true);
-        writeBonusButton.setText("Bonus");
-        chosenAnswer.put(writeBonusButton, "Bonus");
 
         typedWord.setText("");
         typedWord.setVisible(true);
@@ -179,17 +209,44 @@ public class QuizController {
     }
 
     public void onClickNext(ActionEvent actionEvent) {
+        writeBonusLetters = "";
+        writeBonusText.setText(writeBonusLetters);
+        writeBonusText.setDisable(false);
         chosenAnswer.put(buttonNext, typedWord.getText());
         updateProgress(buttonNext);
         prepareQuestion();
     }
 
     public void onClickWriteBonus(ActionEvent actionEvent) {
+        if(writeBonusLetters.length() != selectedQuestion.getCorrectWord().getPolishWord().length()){
+            writeBonusLetters = selectedQuestion.getCorrectWord().getPolishWord().substring(0, writeBonusLetters.length()+1);
+            points -= writeBonusPrice;
+            pointsText.setText("Points: " + points);
+            writeBonusText.setText(writeBonusLetters);
+            writeBonusText.setDisable(false);
+            if (points<writeBonusPrice){
+                writeBonusButton.setDisable(true);
+            }
+        }
 
+        System.out.println(writeBonusLetters);
     }
 
     public void onClickChoiceBonus(ActionEvent actionEvent) {
 
+    }
+
+    public void onClickBackBonus(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("menu-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+
+        MenuController menuController = fxmlLoader.<MenuController>getController();
+        menuController.initialize(stage);
+
+        stage.setScene(scene);
+        stage.setHeight(436.0);
+        stage.setWidth(655.0);
+        stage.show();
     }
 
 
