@@ -2,7 +2,16 @@ package com.example.vocabularyappztp.controllers;
 
 import com.example.vocabularyappztp.Mode;
 import com.example.vocabularyappztp.controllers.iterator.Container;
-import com.example.vocabularyappztp.model.*;
+
+import com.example.vocabularyappztp.model.Question;
+import com.example.vocabularyappztp.model.QuestionSingleChoiceAnswer;
+import com.example.vocabularyappztp.model.QuestionWriteByYourself;
+import com.example.vocabularyappztp.model.Quiz;
+import com.example.vocabularyappztp.model.Word;
+import com.example.vocabularyappztp.model.decorator.Points;
+import com.example.vocabularyappztp.model.decorator.PointsImpl;
+import com.example.vocabularyappztp.model.decorator.SingleChoicePointDecorator;
+import com.example.vocabularyappztp.model.decorator.WritePointDecorator;
 import com.example.vocabularyappztp.model.singleton.Progress;
 import com.example.vocabularyappztp.controllers.builder.AnswerSingleChoiceBuilder;
 import com.example.vocabularyappztp.controllers.builder.AnswerWriteByYourselfBuilder;
@@ -29,12 +38,15 @@ public class QuizController {
     public TextField typedWord;
     public Button buttonNext;
 
+    public int points = 0;
+    Points pointObject;
+
     private Quiz quiz;
     private Stage stage;
     private Mode mode;
 
-    private ArrayList<Word> words = new ArrayList<Word>();
-    private ArrayList<Question> questions = new ArrayList<Question>();
+    private ArrayList<Word> words = new ArrayList<>();
+    private ArrayList<Question> questions = new ArrayList<>();
     private Container container;
     private Question selectedQuestion;
     private HashMap<Button, String> chosenAnswer = new HashMap<>();
@@ -79,6 +91,8 @@ public class QuizController {
     }
 
     public void prepareQuestion() {
+        pointObject = new PointsImpl();
+
         selectedQuestion = mode.chooseQuestion(container);
 
         if (selectedQuestion instanceof QuestionSingleChoiceAnswer) {
@@ -89,6 +103,9 @@ public class QuizController {
     }
 
     public void prepareSingleChoiceQuestion() {
+
+        pointObject = new SingleChoicePointDecorator(pointObject);
+
         questionText.setText("Wybierz prawidłowe tłumaczenie dla " + selectedQuestion.getCorrectWord().getEnglishWord());
         Set<Word> wordsToChoice = ((QuestionSingleChoiceAnswer) selectedQuestion).getAllWordsToChoice();
         List<Word> allWordsToChoice = new ArrayList<>(wordsToChoice);
@@ -119,6 +136,8 @@ public class QuizController {
     }
 
     public void prepareWriteByYourselfQuestion() {
+
+        pointObject = new WritePointDecorator(pointObject);
         questionText.setText("Wpisz tłumaczenie słowa " + selectedQuestion.getCorrectWord().getEnglishWord());
 
         buttonA.setVisible(false);
@@ -175,6 +194,9 @@ public class QuizController {
         if (chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord())) {
             Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(), Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) + 1);
             QuizController.lastAnswerWasCorrect = true;
+
+            points += pointObject.getPoints();
+            System.out.println(points);
         } else if (!chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord()) && Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) > 0) {
             Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(), Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) - 1);
             QuizController.lastAnswerWasCorrect = false;
