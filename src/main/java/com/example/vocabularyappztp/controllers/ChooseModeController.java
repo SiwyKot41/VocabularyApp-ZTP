@@ -44,8 +44,8 @@ public class ChooseModeController {
         FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("choose-language-mode-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 
-        MenuController menuController = fxmlLoader.<MenuController>getController();
-        menuController.initialize(stage);
+        ChooseLanguageModeController chooseLanguageModeController = fxmlLoader.<ChooseLanguageModeController>getController();
+        chooseLanguageModeController.initialize(stage);
 
         stage.setScene(scene);
         stage.setHeight(436.0);
