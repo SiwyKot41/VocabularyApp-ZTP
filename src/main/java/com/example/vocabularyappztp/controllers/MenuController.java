@@ -31,8 +31,17 @@ public class MenuController {
     }
 
     @FXML
-    protected void onSettingsButtonClick() {
+    protected void onSettingsButtonClick() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("settings-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 
+        SettingsController settingsController = fxmlLoader.<SettingsController>getController();
+        settingsController.initialize(stage);
+
+        stage.setScene(scene);
+        stage.setHeight(436.0);
+        stage.setWidth(655.0);
+        stage.show();
     }
 
     @FXML
