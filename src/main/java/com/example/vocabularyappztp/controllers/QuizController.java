@@ -20,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -36,6 +37,7 @@ public class QuizController {
     public Button buttonB;
     public Button buttonC;
     public Button buttonD;
+    public ArrayList<Button> buttons = new ArrayList<>();
     public Button choiceBonusButton;
     public Button writeBonusButton;
     public Button backButton;
@@ -43,7 +45,7 @@ public class QuizController {
     public Button buttonNext;
 
 
-    public int points = 0;
+    public int points = 20;
     public int questionCount = 0;
     Points pointObject;
 
@@ -116,6 +118,11 @@ public class QuizController {
 
     public void prepareSingleChoiceQuestion() {
 
+        buttons.add(buttonA);
+        buttons.add(buttonB);
+        buttons.add(buttonC);
+        buttons.add(buttonD);
+
         choiceBonusButton.setVisible(false);
         choiceBonusButton.setText("Bonus");
 
@@ -153,6 +160,12 @@ public class QuizController {
         buttonD.setVisible(true);
         buttonD.setText(String.valueOf(allWordsToChoice.get(3).getPolishWord()));
         chosenAnswer.put(buttonD, allWordsToChoice.get(3).getPolishWord());
+
+        for(int i=0; i<buttons.size();i++){
+            if (buttons.get(i).getText() == selectedQuestion.getCorrectWord().getPolishWord()){
+                buttons.remove(i);
+            }
+        }
 
         writeBonusButton.setVisible(false);
         typedWord.setVisible(false);
@@ -213,6 +226,7 @@ public class QuizController {
     }
 
     public void onClickNext(ActionEvent actionEvent) {
+        buttons.clear();
         writeBonusLetters = "";
         writeBonusText.setText(writeBonusLetters);
         writeBonusText.setDisable(false);
@@ -237,7 +251,18 @@ public class QuizController {
     }
 
     public void onClickChoiceBonus(ActionEvent actionEvent) {
-
+        System.out.println(buttons.size());
+        if (buttons.size()>1){
+            int index = (int)(Math.random() * buttons.size());
+            System.out.println(index);
+            buttons.get(index).setVisible(false);
+            buttons.remove(index);
+            points -= choiceBonusPrice;
+            pointsText.setText("Points: " + points);
+        }
+        if (buttons.size()==1){
+            choiceBonusButton.setDisable(true);
+        }
     }
 
     public void onClickBackButton(ActionEvent actionEvent) throws IOException {
@@ -260,7 +285,6 @@ public class QuizController {
             Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(), Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) + 1);
             QuizController.lastAnswerWasCorrect = true;
             points += pointObject.getPoints();
-            System.out.println(points);
         } else if (!chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord()) && Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) > 0) {
             Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(), Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) - 1);
             QuizController.lastAnswerWasCorrect = false;
