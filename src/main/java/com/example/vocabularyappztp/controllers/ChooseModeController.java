@@ -12,6 +12,7 @@ public class ChooseModeController {
 
     private Mode mode;
     private Stage stage;
+    private StateLanguage language;
 
     public void onTestButtonClick(ActionEvent actionEvent) throws Exception {
         mode = new Mode(new TestStateMode());
@@ -28,18 +29,19 @@ public class ChooseModeController {
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 
         QuizController quizController = fxmlLoader.<QuizController>getController();
-        quizController.initialize(stage, mode);
+        quizController.initialize(stage, mode, language);
 
         stage.setScene(scene);
         stage.show();
     }
 
-    public void initialize(Stage stage) {
+    public void initialize(Stage stage, StateLanguage language) {
         this.stage = stage;
+        this.language = language;
     }
 
     public void onClickBackButton(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("menu-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("choose-language-mode-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 
         MenuController menuController = fxmlLoader.<MenuController>getController();

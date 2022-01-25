@@ -1,6 +1,7 @@
 package com.example.vocabularyappztp.controllers;
 
 import com.example.vocabularyappztp.Mode;
+import com.example.vocabularyappztp.StateLanguage;
 import com.example.vocabularyappztp.VocabularyApplication;
 import com.example.vocabularyappztp.controllers.iterator.Container;
 
@@ -20,7 +21,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -56,6 +56,7 @@ public class QuizController {
     private Quiz quiz;
     private Stage stage;
     private Mode mode;
+    private StateLanguage language;
 
     private ArrayList<Word> words = new ArrayList<>();
     private ArrayList<Question> questions = new ArrayList<>();
@@ -67,11 +68,15 @@ public class QuizController {
 
     @FXML
     private Label label;
+    @FXML
+    private Label languageLabel;
 
-    public void initialize(Stage stage, Mode mode) throws Exception {
+    public void initialize(Stage stage, Mode mode, StateLanguage language) throws Exception {
         this.stage = stage;
         this.mode = mode;
+        this.language = language;
         mode.setTitle(label);
+        language.setTitle(languageLabel);
 
         words = Utils.readWords();
         questions = createQuestions();

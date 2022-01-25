@@ -18,11 +18,11 @@ public class MenuController {
 
     @FXML
     protected void onStartButtonClick() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("choose-mode-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("choose-language-mode-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 
-        ChooseModeController chooseModeController = fxmlLoader.<ChooseModeController>getController();
-        chooseModeController.initialize(stage);
+        ChooseLanguageModeController chooseLanguageModeController = fxmlLoader.<ChooseLanguageModeController>getController();
+        chooseLanguageModeController.initialize(stage);
 
         stage.setScene(scene);
         stage.setHeight(436.0);
