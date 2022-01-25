@@ -45,7 +45,7 @@ public class QuizController {
     public Button buttonNext;
 
 
-    public int points = 20;
+    public int points = 0;
     public int questionCount = 0;
     Points pointObject;
 
@@ -80,19 +80,38 @@ public class QuizController {
 
         words = Utils.readWords();
         questions = createQuestions();
-        quiz = new Quiz(questions);
+        System.out.println(SettingsController.difficulty);
+        System.out.println(questions.get(0).getCorrectWord().getLevel().toString());
+        System.out.println(questions.size());
+        System.out.println(questions.stream().filter(question ->question.getCorrectWord().getLevel().toString().equals(SettingsController.difficulty)).count());
+        questions.stream().filter(question ->question.getCorrectWord().getLevel().toString().equals(SettingsController.difficulty));
+        if(questions.stream().filter(question ->question.getCorrectWord().getLevel().toString().equals(SettingsController.difficulty)).count() != 0)
+        {
+            quiz = new Quiz(questions);
 
-        if (!Progress.isExisting()) {
             for (Word word : words) {
                 Progress.getInstance().putKnownWord(word, 0);
             }
+            container = new Container(questions);
+            prepareQuestion();
+
+        }
+        else{
+            questionText.setText("Brak pytań w tym poziomie trudności");
+            buttonA.setVisible(false);
+            buttonB.setVisible(false);
+            buttonC.setVisible(false);
+            buttonD.setVisible(false);
+            choiceBonusButton.setVisible(false);
+            writeBonusButton.setVisible(false);
+            buttonNext.setVisible(false);
+            typedWord.setVisible(false);
         }
 
-        container = new Container(questions);
-        prepareQuestion();
     }
 
-    public ArrayList<Question> createQuestions() {
+
+    private ArrayList<Question> createQuestions() {
         ArrayList<Question> questions = new ArrayList<Question>();
         for (Word word : words) {
             AnswersBuilder answersBuilder = new AnswerSingleChoiceBuilder();
@@ -107,7 +126,7 @@ public class QuizController {
         return questions;
     }
 
-    public void prepareQuestion() {
+    private void prepareQuestion() {
         pointObject = new PointsImpl();
 
         selectedQuestion = mode.chooseQuestion(container);
@@ -169,7 +188,8 @@ public class QuizController {
         for(int i=0; i<buttons.size();i++){
             if (buttons.get(i).getText() == selectedQuestion.getCorrectWord().getPolishWord()){
                 buttons.remove(i);
-            }
+            }            prepareSingleChoiceQuestion();
+
         }
 
         writeBonusButton.setVisible(false);
