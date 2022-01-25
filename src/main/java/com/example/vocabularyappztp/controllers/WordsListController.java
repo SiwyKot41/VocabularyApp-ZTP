@@ -50,19 +50,22 @@ public class WordsListController {
 
         englishColumn.setCellValueFactory(new PropertyValueFactory("englishWord"));
         englishColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        englishColumn.setOnEditCommit((EventHandler<TableColumn.CellEditEvent>) cellEditEvent -> ((Word) cellEditEvent.getTableView().getItems().get(
+        englishColumn.setOnEditCommit((EventHandler<TableColumn.CellEditEvent>) cellEditEvent ->
+                ((Word) cellEditEvent.getTableView().getItems().get(
                 cellEditEvent.getTablePosition().getRow())
         ).setEnglishWord((String) cellEditEvent.getNewValue()));
 
         polishColumn.setCellValueFactory(new PropertyValueFactory("polishWord"));
         polishColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        polishColumn.setOnEditCommit((EventHandler<TableColumn.CellEditEvent>) cellEditEvent -> ((Word) cellEditEvent.getTableView().getItems().get(
+        polishColumn.setOnEditCommit((EventHandler<TableColumn.CellEditEvent>) cellEditEvent ->
+                ((Word) cellEditEvent.getTableView().getItems().get(
                 cellEditEvent.getTablePosition().getRow())
         ).setPolishWord((String) cellEditEvent.getNewValue()));
 
         learnStateColumn.setCellValueFactory(new PropertyValueFactory("learnState"));
         learnStateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        learnStateColumn.setOnEditCommit((EventHandler<TableColumn.CellEditEvent>) cellEditEvent -> ((Word) cellEditEvent.getTableView().getItems().get(
+        learnStateColumn.setOnEditCommit((EventHandler<TableColumn.CellEditEvent>) cellEditEvent ->
+                ((Word) cellEditEvent.getTableView().getItems().get(
                 cellEditEvent.getTablePosition().getRow())
         ).setLearnState((String) cellEditEvent.getNewValue()));
 

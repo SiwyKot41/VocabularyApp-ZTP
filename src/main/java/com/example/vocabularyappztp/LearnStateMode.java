@@ -14,7 +14,8 @@ import java.util.List;
 public class LearnStateMode extends StateMode {
 
     private Category typeOfQuestion = Category.SINGLE_CHOICE;
-    private List<Category> typesOfQuestion = new ArrayList<>(Arrays.asList(Category.SINGLE_CHOICE, Category.TRANSLATE_BY_YOURSELF));
+    private List<Category> typesOfQuestion = new ArrayList<>
+            (Arrays.asList(Category.SINGLE_CHOICE, Category.TRANSLATE_BY_YOURSELF));
 
     @Override
     public void setTitle(Label label) {
@@ -28,11 +29,12 @@ public class LearnStateMode extends StateMode {
 
         Iterator iterator = container.randomIterator();
 
-        if (QuizController.lastAnswerWasCorrect) typeOfQuestion = typesOfQuestion.get((typesOfQuestion.indexOf(typeOfQuestion) + 1) % 2);
+        if (QuizController.lastAnswerWasCorrect) typeOfQuestion = typesOfQuestion
+                .get((typesOfQuestion.indexOf(typeOfQuestion) + 1) % 2);
 
         while (iterator.hasNext()) {
             Question currentQuestion = iterator.next();
-            if (theLeastLevelOfKnowingWord > Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord())) {
+            if (theLeastLevelOfKnowingWord > Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord())){
                 theLeastLevelOfKnowingWord = Progress.getInstance().getKnownWords().get(currentQuestion.getCorrectWord());
 
                 if (typeOfQuestion == Category.SINGLE_CHOICE) selectedQuestion = currentQuestion;

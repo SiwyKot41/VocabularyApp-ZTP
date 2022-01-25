@@ -65,7 +65,6 @@ public class QuizController {
     private HashMap<Button, String> chosenAnswer = new HashMap<>();
     public static boolean lastAnswerWasCorrect = true;
 
-
     @FXML
     private Label label;
     @FXML
@@ -83,10 +82,12 @@ public class QuizController {
         System.out.println(SettingsController.difficulty);
         System.out.println(questions.get(0).getCorrectWord().getLevel().toString());
         System.out.println(questions.size());
-        System.out.println(questions.stream().filter(question ->question.getCorrectWord().getLevel().toString().equals(SettingsController.difficulty)).count());
-        questions.stream().filter(question ->question.getCorrectWord().getLevel().toString().equals(SettingsController.difficulty));
-        if(questions.stream().filter(question ->question.getCorrectWord().getLevel().toString().equals(SettingsController.difficulty)).count() != 0)
-        {
+        System.out.println(questions.stream().filter(question -> question.getCorrectWord().getLevel().toString()
+                .equals(SettingsController.difficulty)).count());
+        questions.stream().filter(question -> question.getCorrectWord().getLevel().toString().
+                equals(SettingsController.difficulty));
+        if (questions.stream().filter(question -> question.getCorrectWord().getLevel().toString()
+                .equals(SettingsController.difficulty)).count() != 0) {
             quiz = new Quiz(questions);
 
             for (Word word : words) {
@@ -95,8 +96,7 @@ public class QuizController {
             container = new Container(questions);
             prepareQuestion();
 
-        }
-        else{
+        } else {
             questionText.setText("Brak pytań w tym poziomie trudności");
             buttonA.setVisible(false);
             buttonB.setVisible(false);
@@ -150,22 +150,21 @@ public class QuizController {
         choiceBonusButton.setVisible(false);
         choiceBonusButton.setText("Bonus");
 
-        if(label.getText() == "Learn") {
+        if (label.getText() == "Learn") {
             pointObject = new SingleChoicePointDecorator(pointObject);
             pointsText.setText("Points: " + points);
 
             choiceBonusButton.setVisible(true);
             choiceBonusButton.setDisable(true);
 
-            if (points >= choiceBonusPrice){
+            if (points >= choiceBonusPrice) {
                 choiceBonusButton.setDisable(false);
             }
-        }
-        else{
+        } else {
             pointObject = new TestPointDecorator(pointObject);
         }
 
-        questionText.setText("Wybierz prawidłowe tłumaczenie dla " + selectedQuestion.getCorrectWord().getEnglishWord());
+        questionText.setText("Wybierz prawidłowe tłumaczenie dla " +selectedQuestion.getCorrectWord().getEnglishWord());
         Set<Word> wordsToChoice = ((QuestionSingleChoiceAnswer) selectedQuestion).getAllWordsToChoice();
         List<Word> allWordsToChoice = new ArrayList<>(wordsToChoice);
 
@@ -185,10 +184,11 @@ public class QuizController {
         buttonD.setText(String.valueOf(allWordsToChoice.get(3).getPolishWord()));
         chosenAnswer.put(buttonD, allWordsToChoice.get(3).getPolishWord());
 
-        for(int i=0; i<buttons.size();i++){
-            if (buttons.get(i).getText() == selectedQuestion.getCorrectWord().getPolishWord()){
+        for (int i = 0; i < buttons.size(); i++) {
+            if (buttons.get(i).getText() == selectedQuestion.getCorrectWord().getPolishWord()) {
                 buttons.remove(i);
-            }            prepareSingleChoiceQuestion();
+            }
+            prepareSingleChoiceQuestion();
 
         }
 
@@ -202,18 +202,17 @@ public class QuizController {
         writeBonusButton.setVisible(false);
         writeBonusButton.setText("Bonus");
 
-        if(label.getText() == "Learn") {
+        if (label.getText() == "Learn") {
             pointObject = new WritePointDecorator(pointObject);
             pointsText.setText("Points: " + points);
 
             writeBonusButton.setVisible(true);
             writeBonusButton.setDisable(true);
 
-            if(points >= writeBonusPrice){
+            if (points >= writeBonusPrice) {
                 writeBonusButton.setDisable(false);
             }
-        }
-        else{
+        } else {
             pointObject = new TestPointDecorator(pointObject);
         }
 
@@ -261,13 +260,14 @@ public class QuizController {
     }
 
     public void onClickWriteBonus(ActionEvent actionEvent) {
-        if(writeBonusLetters.length() != selectedQuestion.getCorrectWord().getPolishWord().length()){
-            writeBonusLetters = selectedQuestion.getCorrectWord().getPolishWord().substring(0, writeBonusLetters.length()+1);
+        if (writeBonusLetters.length() != selectedQuestion.getCorrectWord().getPolishWord().length()) {
+            writeBonusLetters = selectedQuestion.getCorrectWord().
+                    getPolishWord().substring(0, writeBonusLetters.length() + 1);
             points -= writeBonusPrice;
             pointsText.setText("Points: " + points);
             writeBonusText.setText(writeBonusLetters);
             writeBonusText.setDisable(false);
-            if (points<writeBonusPrice){
+            if (points < writeBonusPrice) {
                 writeBonusButton.setDisable(true);
             }
         }
@@ -277,15 +277,15 @@ public class QuizController {
 
     public void onClickChoiceBonus(ActionEvent actionEvent) {
         System.out.println(buttons.size());
-        if (buttons.size()>1){
-            int index = (int)(Math.random() * buttons.size());
+        if (buttons.size() > 1) {
+            int index = (int) (Math.random() * buttons.size());
             System.out.println(index);
             buttons.get(index).setVisible(false);
             buttons.remove(index);
             points -= choiceBonusPrice;
             pointsText.setText("Points: " + points);
         }
-        if (buttons.size()==1){
+        if (buttons.size() == 1) {
             choiceBonusButton.setDisable(true);
         }
     }
@@ -307,17 +307,20 @@ public class QuizController {
     public void updateProgress(Button button) {
 
         if (chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord())) {
-            Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(), Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) + 1);
+            Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(),
+                    Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) + 1);
             QuizController.lastAnswerWasCorrect = true;
             points += pointObject.getPoints();
-        } else if (!chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord()) && Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) > 0) {
-            Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(), Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) - 1);
+        } else if (!chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord()) &&
+                    Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) > 0) {
+            Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(),
+                    Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) - 1);
             QuizController.lastAnswerWasCorrect = false;
         } else {
             QuizController.lastAnswerWasCorrect = false;
         }
         questionCount += 1;
-        if(label.getText() == "Test" && questionCount == 10){
+        if (label.getText() == "Test" && questionCount == 10) {
             pointsText.setText("Points: " + points);
         }
     }
