@@ -9,10 +9,7 @@ import com.example.vocabularyappztp.model.QuestionSingleChoiceAnswer;
 import com.example.vocabularyappztp.model.QuestionWriteByYourself;
 import com.example.vocabularyappztp.model.Quiz;
 import com.example.vocabularyappztp.model.Word;
-import com.example.vocabularyappztp.model.decorator.Points;
-import com.example.vocabularyappztp.model.decorator.PointsImpl;
-import com.example.vocabularyappztp.model.decorator.SingleChoicePointDecorator;
-import com.example.vocabularyappztp.model.decorator.WritePointDecorator;
+import com.example.vocabularyappztp.model.decorator.*;
 import com.example.vocabularyappztp.model.singleton.Progress;
 import com.example.vocabularyappztp.controllers.builder.AnswerSingleChoiceBuilder;
 import com.example.vocabularyappztp.controllers.builder.AnswerWriteByYourselfBuilder;
@@ -46,7 +43,8 @@ public class QuizController {
     public Button buttonNext;
 
 
-    public int points = 10;
+    public int points = 0;
+    public int questionCount = 0;
     Points pointObject;
 
     public int choiceBonusPrice = 6;
@@ -132,6 +130,9 @@ public class QuizController {
                 choiceBonusButton.setDisable(false);
             }
         }
+        else{
+            pointObject = new TestPointDecorator(pointObject);
+        }
 
         questionText.setText("Wybierz prawidłowe tłumaczenie dla " + selectedQuestion.getCorrectWord().getEnglishWord());
         Set<Word> wordsToChoice = ((QuestionSingleChoiceAnswer) selectedQuestion).getAllWordsToChoice();
@@ -173,6 +174,9 @@ public class QuizController {
             if(points >= writeBonusPrice){
                 writeBonusButton.setDisable(false);
             }
+        }
+        else{
+            pointObject = new TestPointDecorator(pointObject);
         }
 
         questionText.setText("Wpisz tłumaczenie słowa " + selectedQuestion.getCorrectWord().getEnglishWord());
@@ -236,7 +240,7 @@ public class QuizController {
 
     }
 
-    public void onClickBackBonus(ActionEvent actionEvent) throws IOException {
+    public void onClickBackButton(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 
@@ -251,10 +255,10 @@ public class QuizController {
 
 
     public void updateProgress(Button button) {
+
         if (chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord())) {
             Progress.getInstance().putKnownWord(selectedQuestion.getCorrectWord(), Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) + 1);
             QuizController.lastAnswerWasCorrect = true;
-
             points += pointObject.getPoints();
             System.out.println(points);
         } else if (!chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord()) && Progress.getInstance().getKnownWords().get(selectedQuestion.getCorrectWord()) > 0) {
@@ -262,6 +266,10 @@ public class QuizController {
             QuizController.lastAnswerWasCorrect = false;
         } else {
             QuizController.lastAnswerWasCorrect = false;
+        }
+        questionCount += 1;
+        if(label.getText() == "Test" && questionCount == 10){
+            pointsText.setText("Points: " + points);
         }
     }
 }

@@ -17,6 +17,6 @@
       <Label fx:id="writeBonusText" layoutX="100.0" layoutY="130.0" prefHeight="24.0" prefWidth="350.0"  />
       <TextField fx:id="typedWord" layoutX="195.0" layoutY="116.0" />
       <Button fx:id="buttonNext" layoutX="256.0" layoutY="176.0" mnemonicParsing="false" onAction="#onClickNext" text="Next" />
-      <Button fx:id="backButton" layoutX="356.0" layoutY="176.0" mnemonicParsing="false" onAction="#onClickBackBonus" text="Back" />
+      <Button fx:id="backButton" layoutX="356.0" layoutY="176.0" mnemonicParsing="false" onAction="#onClickBackButton" text="Back" />
    </children>
 </AnchorPane>
