@@ -13,9 +13,9 @@
 
     <children>
         <Label layoutX="100.0" layoutY="100.0" text="Wybór poziomu trudności"/>
-        <Button layoutX="100.0" layoutY="130.0" mnemonicParsing="false" onAction="#onClickEasyButton" text="Easy" />
-        <Button layoutX="150.0" layoutY="130.0" mnemonicParsing="false" onAction="#onClickMediumButton" text="Medium" />
-        <Button layoutX="223.0" layoutY="130.0" mnemonicParsing="false" onAction="#onClickHardButton" text="Hard" />
+        <Button fx:id="easyButton" layoutX="100.0" layoutY="130.0" mnemonicParsing="false" onAction="#onClickEasyButton" text="Easy"/>
+        <Button fx:id="mediumButton" layoutX="150.0" layoutY="130.0" mnemonicParsing="false" onAction="#onClickMediumButton" text="Medium" />
+        <Button fx:id="hardButton" layoutX="223.0" layoutY="130.0" mnemonicParsing="false" onAction="#onClickHardButton" text="Hard" />
         <Button fx:id="backButton" layoutX="500.0" layoutY="320.0" mnemonicParsing="false" onAction="#onClickBackButton" text="Back" />
     </children>
 </AnchorPane>
