@@ -134,13 +134,47 @@ public class QuizController {
         writeBonusText.setDisable(true);
 
         if (selectedQuestion instanceof QuestionSingleChoiceAnswer) {
-            prepareSingleChoiceQuestion();
+            if (questionCount<10 && label.getText() == "Test" || label.getText() == "Learn" ) prepareSingleChoiceQuestion();
+            else printResult();
         } else if (selectedQuestion instanceof QuestionWriteByYourself) {
-            prepareWriteByYourselfQuestion();
+            if (questionCount<10 && label.getText() == "Test" || label.getText() == "Learn" ) prepareWriteByYourselfQuestion();
+            else printResult();
         }
     }
 
-    public void prepareSingleChoiceQuestion() {
+    private void prepareWriteByYourselfQuestion() {
+
+        writeBonusButton.setVisible(false);
+        writeBonusButton.setText("Bonus");
+
+        if (label.getText() == "Learn") {
+            pointObject = new WritePointDecorator(pointObject);
+            pointsText.setText("Points: " + points);
+
+            writeBonusButton.setVisible(true);
+            writeBonusButton.setDisable(true);
+
+            if (points >= writeBonusPrice) {
+                writeBonusButton.setDisable(false);
+            }
+        } else {
+            pointObject = new TestPointDecorator(pointObject);
+        }
+
+        questionText.setText("Wpisz tłumaczenie słowa " + selectedQuestion.getCorrectWord().getEnglishWord());
+
+        buttonA.setVisible(false);
+        buttonB.setVisible(false);
+        buttonC.setVisible(false);
+        buttonD.setVisible(false);
+        choiceBonusButton.setVisible(false);
+
+        typedWord.setText("");
+        typedWord.setVisible(true);
+        buttonNext.setVisible(true);
+    }
+
+    private void prepareSingleChoiceQuestion() {
 
         buttons.add(buttonA);
         buttons.add(buttonB);
@@ -188,8 +222,6 @@ public class QuizController {
             if (buttons.get(i).getText() == selectedQuestion.getCorrectWord().getPolishWord()) {
                 buttons.remove(i);
             }
-            prepareSingleChoiceQuestion();
-
         }
 
         writeBonusButton.setVisible(false);
@@ -197,37 +229,7 @@ public class QuizController {
         buttonNext.setVisible(false);
     }
 
-    public void prepareWriteByYourselfQuestion() {
 
-        writeBonusButton.setVisible(false);
-        writeBonusButton.setText("Bonus");
-
-        if (label.getText() == "Learn") {
-            pointObject = new WritePointDecorator(pointObject);
-            pointsText.setText("Points: " + points);
-
-            writeBonusButton.setVisible(true);
-            writeBonusButton.setDisable(true);
-
-            if (points >= writeBonusPrice) {
-                writeBonusButton.setDisable(false);
-            }
-        } else {
-            pointObject = new TestPointDecorator(pointObject);
-        }
-
-        questionText.setText("Wpisz tłumaczenie słowa " + selectedQuestion.getCorrectWord().getEnglishWord());
-
-        buttonA.setVisible(false);
-        buttonB.setVisible(false);
-        buttonC.setVisible(false);
-        buttonD.setVisible(false);
-        choiceBonusButton.setVisible(false);
-
-        typedWord.setText("");
-        typedWord.setVisible(true);
-        buttonNext.setVisible(true);
-    }
 
     public void onClickAnswerA(ActionEvent actionEvent) {
         updateProgress(buttonA);
@@ -285,7 +287,7 @@ public class QuizController {
             points -= choiceBonusPrice;
             pointsText.setText("Points: " + points);
         }
-        if (buttons.size() == 1) {
+        if (buttons.size() == 1 || points <choiceBonusPrice) {
             choiceBonusButton.setDisable(true);
         }
     }
@@ -304,6 +306,18 @@ public class QuizController {
     }
 
 
+    public void printResult(){
+        questionText.setText("Test zakończony");
+        pointsText.setText("Points: " + points);
+        buttonA.setVisible(false);
+        buttonB.setVisible(false);
+        buttonC.setVisible(false);
+        buttonD.setVisible(false);
+        choiceBonusButton.setVisible(false);
+        writeBonusButton.setVisible(false);
+        buttonNext.setVisible(false);
+        typedWord.setVisible(false);
+    }
     public void updateProgress(Button button) {
 
         if (chosenAnswer.get(button).equals(selectedQuestion.getCorrectWord().getPolishWord())) {
@@ -320,8 +334,6 @@ public class QuizController {
             QuizController.lastAnswerWasCorrect = false;
         }
         questionCount += 1;
-        if (label.getText() == "Test" && questionCount == 10) {
-            pointsText.setText("Points: " + points);
-        }
+
     }
 }
