@@ -18,7 +18,8 @@ public class MenuController {
 
     @FXML
     protected void onStartButtonClick() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("choose-language-mode-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.
+                getResource("choose-language-mode-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 
         ChooseLanguageModeController chooseLanguageModeController = fxmlLoader.<ChooseLanguageModeController>getController();

@@ -26,9 +26,9 @@ public class SettingsController {
 
         System.out.println(easyButton.getText().toUpperCase().equals(difficulty));
         this.stage = stage;
-        if (easyButton.getText().toUpperCase().equals(difficulty)) easyButton.setStyle("-fx-background-color: #23A9D6; ");
-        if (mediumButton.getText().toUpperCase().equals(difficulty)) mediumButton.setStyle("-fx-background-color: #23A9D6; ");
-        if (hardButton.getText().toUpperCase().equals(difficulty)) hardButton.setStyle("-fx-background-color: #23A9D6; ");
+        if (easyButton.getText().toUpperCase().equals(difficulty)) easyButton.setStyle("-fx-background-color: #23A9D6;");
+        if (mediumButton.getText().toUpperCase().equals(difficulty)) mediumButton.setStyle("-fx-background-color: #23A9D6;");
+        if (hardButton.getText().toUpperCase().equals(difficulty)) hardButton.setStyle("-fx-background-color: #23A9D6;");
 
     }
     public void onClickBackButton(ActionEvent actionEvent) throws IOException {
