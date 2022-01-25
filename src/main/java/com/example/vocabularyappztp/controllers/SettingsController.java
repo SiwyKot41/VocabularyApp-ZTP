@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class SettingsController {
 
+    public int difficulty = 1;
     private Stage stage;
 
     public void initialize(Stage stage) {
@@ -26,5 +27,17 @@ public class SettingsController {
         stage.setHeight(436.0);
         stage.setWidth(655.0);
         stage.show();
+    }
+
+    public void onClickEasyButton(ActionEvent actionEvent) {
+        this.difficulty = 0;
+    }
+
+    public void onClickMediumButton(ActionEvent actionEvent) {
+        this.difficulty = 1;
+    }
+
+    public void onClickHardButton(ActionEvent actionEvent) {
+        this.difficulty = 2;
     }
 }
