@@ -77,10 +77,8 @@ public class QuizController {
         questions = createQuestions();
         quiz = new Quiz(questions);
 
-        if (!Progress.isExisting()) {
-            for (Word word : words) {
-                Progress.getInstance().putKnownWord(word, 0);
-            }
+        for (Word word : words) {
+            Progress.getInstance().putKnownWord(word, 0);
         }
 
         container = new Container(questions);
