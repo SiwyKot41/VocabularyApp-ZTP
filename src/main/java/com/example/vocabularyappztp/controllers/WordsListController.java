@@ -1,5 +1,6 @@
 package com.example.vocabularyappztp.controllers;
 
+import com.example.vocabularyappztp.VocabularyApplication;
 import com.example.vocabularyappztp.model.Word;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -8,6 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -15,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +33,11 @@ public class WordsListController {
     public TableColumn polishColumn;
     public TableColumn englishColumn;
     public TableColumn learnStateColumn;
-
+    private Stage stage;
 
 
     public void initialize(Stage stage) throws Exception {
+        this.stage = stage;
         this.words = Utils.readWords();
 
         data = getInitialTableData();
@@ -119,6 +124,18 @@ public class WordsListController {
         wordsTable.getFocusModel().focus(ix);
     }
 
+    public void onClickBackButton(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("menu-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+
+        MenuController menuController = fxmlLoader.<MenuController>getController();
+        menuController.initialize(stage);
+
+        stage.setScene(scene);
+        stage.setHeight(436.0);
+        stage.setWidth(655.0);
+        stage.show();
     }
+}
 
 
