@@ -24,6 +24,10 @@
             </TableView>
         <Button fx:id="buttonAdd" layoutX="500.0" layoutY="50.0" mnemonicParsing="false" onAction="#onClickAdd" text="Dodaj" />
         <Button fx:id="buttonDelete" layoutX="500.0" layoutY="100.0" mnemonicParsing="false" onAction="#onClickDelete" text="Usuń" />
+        <Label layoutX="500.0" layoutY="150.0" text="oznaczenie trybów:"/>
+        <Label layoutX="500.0" layoutY="180.0" text="0 - do nauczenia"/>
+        <Label layoutX="500.0" layoutY="210.0" text="1 - w trakcie"/>
+        <Label layoutX="500.0" layoutY="240.0" text="2 - nauczone"/>
         <Button fx:id="backButton" layoutX="500.0" layoutY="320.0" mnemonicParsing="false" onAction="#onClickBackButton" text="Back" />
     </children>
 </AnchorPane>
