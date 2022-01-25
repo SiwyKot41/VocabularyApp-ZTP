@@ -36,13 +36,27 @@ public class MenuController {
     }
 
     @FXML
+    protected void onWordsListButtonClick() throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(VocabularyApplication.class.getResource("words-list-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+
+        WordsListController wordsListController = fxmlLoader.<WordsListController>getController();
+        wordsListController.initialize(stage);
+
+        stage.setTitle("Lista słówek");
+        stage.setScene(scene);
+        stage.setHeight(436.0);
+        stage.setWidth(655.0);
+        stage.show();
+    }
+    @FXML
     protected void onExitButtonClick() {
         Platform.exit();
         System.exit(0);
     }
 
     public void initialize(Stage stage) {
-        welcomeText.setText("Welcome to JavaFX Application!");
+        welcomeText.setText("Welcome to Vocabulary Application!");
         this.stage = stage;
     }
 }

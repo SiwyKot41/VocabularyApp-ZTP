@@ -12,5 +12,6 @@
     <Label fx:id="welcomeText" />
     <Button onAction="#onStartButtonClick" text="Start!" />
     <Button onAction="#onSettingsButtonClick" text="Settings!" />
+    <Button onAction="#onWordsListButtonClick" text="Words List" />
     <Button onAction="#onExitButtonClick" text="Exit!" />
 </VBox>

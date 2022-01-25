@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.skin.TableHeaderRow?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.vocabularyappztp.controllers.WordsListController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <children>
+        <Label fx:id="actionStatus"  layoutX="150.0" layoutY="20.0" text="wybrano"/>
+            <TableView fx:id="wordsTable" prefHeight="300.0" prefWidth="300.0" layoutX="150.0" layoutY="50.0">
+                <columns>
+                    <TableColumn fx:id="polishColumn" prefWidth="100.0" text="polski" />
+                    <TableColumn fx:id="englishColumn" prefWidth="100.0" text="angielski" />
+                    <TableColumn fx:id="learnStateColumn" prefWidth="100.0" text="tryb" />
+                </columns>
+            </TableView>
+        <Button fx:id="buttonAdd" layoutX="500.0" layoutY="50.0" mnemonicParsing="false" onAction="#onClickAdd" text="Dodaj" />
+        <Button fx:id="buttonDelete" layoutX="500.0" layoutY="100.0" mnemonicParsing="false" onAction="#onClickDelete" text="Usuń" />
+    </children>
+</AnchorPane>
