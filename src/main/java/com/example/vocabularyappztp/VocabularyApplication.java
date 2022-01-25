@@ -18,7 +18,7 @@ public class VocabularyApplication extends Application {
         MenuController menuController = fxmlLoader.<MenuController>getController();
         menuController.initialize(stage);
 
-        stage.setTitle("Hello!");
+        stage.setTitle("VocabularyApp");
         stage.setScene(scene);
         stage.show();
     }
