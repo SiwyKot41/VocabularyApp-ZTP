@@ -4,3 +4,4 @@ fast szybki 1
 project projekt 0
 here tutaj 2
 home dom 0
+dog pies 0
