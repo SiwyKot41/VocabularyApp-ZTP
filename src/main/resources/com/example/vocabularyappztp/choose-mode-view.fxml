@@ -8,5 +8,6 @@
       <Button onAction="#onLearnButtonClick" layoutX="150.0" layoutY="200.0" prefHeight="63.0" prefWidth="119.0" text="Learn" />
       <Button onAction="#onTestButtonClick" layoutX="380.0" layoutY="200.0" prefHeight="63.0" prefWidth="119.0" text="Test" />
       <Label layoutX="280.0" layoutY="100.0" text="Select mode" />
+      <Button fx:id="backButton" layoutX="300.0" layoutY="300.0" mnemonicParsing="false" onAction="#onClickBackButton" text="Back" />
    </children>
 </AnchorPane>
