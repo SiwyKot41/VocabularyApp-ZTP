@@ -13,12 +13,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,6 +138,18 @@ public class WordsListController {
         stage.setHeight(436.0);
         stage.setWidth(655.0);
         stage.show();
+    }
+
+    public void onClickSave(ActionEvent actionEvent) throws FileNotFoundException {
+        PrintWriter writer = new PrintWriter("words.txt");
+
+        for(int i = 0; i < wordsTable.getItems().size(); i++){
+            wordsTable.getSelectionModel().select(i);
+            Word word = (Word) wordsTable.getSelectionModel().getSelectedItem();
+            writer.println(word.toString());
+        }
+
+        writer.close();
     }
 }
 

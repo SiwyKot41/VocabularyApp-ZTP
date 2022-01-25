@@ -28,6 +28,7 @@
         <Label layoutX="500.0" layoutY="180.0" text="0 - do nauczenia"/>
         <Label layoutX="500.0" layoutY="210.0" text="1 - w trakcie"/>
         <Label layoutX="500.0" layoutY="240.0" text="2 - nauczone"/>
+        <Button fx:id="buttonSave" layoutX="500.0" layoutY="280.0" mnemonicParsing="false" onAction="#onClickSave" text="Zapisz" />
         <Button fx:id="backButton" layoutX="500.0" layoutY="320.0" mnemonicParsing="false" onAction="#onClickBackButton" text="Back" />
     </children>
 </AnchorPane>

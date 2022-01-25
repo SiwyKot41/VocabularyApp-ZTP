@@ -49,6 +49,6 @@ public class Word {
     public void setLearnState(String learnState) { this.learnState = learnState;}
 
     public String toString(){
-        return (this.englishWord + " - " + this.polishWord);
+        return (this.englishWord + " " + this.polishWord + " " + this.learnState);
     }
 }
