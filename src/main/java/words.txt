@@ -1,6 +1,6 @@
-hello cześć
-there tam
-fast szybki
-project projekt
-here tutaj
-home dom
+hello cześć 0
+there tam 0
+fast szybki 1
+project projekt 0
+here tutaj 2
+home dom 0

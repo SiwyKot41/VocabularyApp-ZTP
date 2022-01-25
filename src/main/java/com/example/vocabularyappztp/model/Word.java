@@ -4,10 +4,12 @@ public class Word {
     private String englishWord;
     private String polishWord;
     private Level level;
+    private String learnState;
 
-    public Word(String englishWord, String polishWord) throws Exception {
+    public Word(String englishWord, String polishWord, String learnState) throws Exception {
         this.englishWord = englishWord;
         this.polishWord = polishWord;
+        this.learnState = learnState;
         selectLevel();
     }
 
@@ -40,5 +42,13 @@ public class Word {
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+
+    public String getLearnState() { return learnState;}
+
+    public void setLearnState(String learnState) { this.learnState = learnState;}
+
+    public String toString(){
+        return (this.englishWord + " - " + this.polishWord);
     }
 }

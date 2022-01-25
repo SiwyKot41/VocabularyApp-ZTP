@@ -17,7 +17,7 @@ public class Utils {
         while (scanner.hasNextLine()) {
             currentLine = scanner.nextLine();
             String[] word = currentLine.split(" ");
-            words.add(new Word(word[0], word[1]));
+            words.add(new Word(word[0], word[1], word[2]));
         }
 
         return words;
