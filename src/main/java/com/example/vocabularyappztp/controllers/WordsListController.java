@@ -144,7 +144,7 @@ public class WordsListController {
     }
 
     public void onClickSave(ActionEvent actionEvent) throws FileNotFoundException {
-        PrintWriter writer = new PrintWriter("words.txt");
+        PrintWriter writer = new PrintWriter("./src/main/java/words.txt");
 
         for(int i = 0; i < wordsTable.getItems().size(); i++){
             wordsTable.getSelectionModel().select(i);
